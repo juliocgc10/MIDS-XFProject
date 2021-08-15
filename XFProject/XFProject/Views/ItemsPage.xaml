@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XFProject.Views.ItemsPage"
+             Title="Mis Fotos"
+             xmlns:local="clr-namespace:XFProject.ViewModels"  
+             xmlns:model="clr-namespace:XFProject.Models"  
+             x:Name="BrowseItemsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Agregar" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--<vm:ItemsViewModel x:Key="ItemsViewModel" x:Name="ItemsViewModel"/>-->
+            <Style x:Key="NameLabel" x:Name="NameLabel" TargetType="Label">
+                <Setter  Property="FontSize" Value="14"/>
+                <Setter  Property="TextColor" Value="Black"/>
+                <Setter  Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="LabelStyle" x:Name="LabelStyle" TargetType="Label">
+                <Setter  Property="FontSize" Value="12"/>
+            </Style>
+            <Style x:Key="JobTitleLabelStyle" x:Name="JobTitleLabelStyle" TargetType="Label" BasedOn="{StaticResource LabelStyle}">
+                <Setter  Property="VerticalTextAlignment" Value="Center"/>
+                <Setter  Property="VerticalOptions" Value="Center"/>
+                <Setter  Property="FontAttributes" Value="Bold"/>
+                <Setter  Property="TextColor" Value="Gray"/>
+            </Style>
+            <Style x:Key="ImageLabelStackLayout" x:Name="ImageLabelStackLayout" TargetType="StackLayout" >
+                <Setter  Property="Orientation" Value="Horizontal"/>
+            </Style>
+            <Style x:Key="DetailsStackLayout" x:Name="DetailsStackLayout" TargetType="StackLayout" >
+                <Setter  Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter  Property="VerticalOptions" Value="FillAndExpand"/>
+                <Setter  Property="Spacing" Value="2"/>
+            </Style>
+            <Style x:Key="imageStyle" x:Name="imageStyle" TargetType="Image">
+                <Setter  Property="WidthRequest" Value="26"/>
+                <Setter  Property="HeightRequest" Value="26"/>
+            </Style>
+            <Style x:Key="profileImageStyle" x:Name="profileImageStyle" TargetType="Image">
+                <Setter  Property="WidthRequest" Value="80"/>
+                <Setter  Property="HeightRequest" Value="60"/>
+                <Setter  Property="Aspect" Value="Fill"/>
+            </Style>
+            <Style x:Key="profileImageFrameStyle" x:Name="profileImageFrameStyle" TargetType="Frame">
+                <Setter  Property="CornerRadius" Value="5"/>
+                <Setter  Property="Margin" Value="0"/>
+                <Setter  Property="Padding" Value="0"/>
+                <Setter  Property="IsClippedToBounds" Value="True"/>
+            </Style>
+            <Style x:Key="FrameCardViewStyle" x:Name="FrameCardViewStyle" TargetType="Frame">
+                <Setter  Property="CornerRadius" Value="5"/>
+                <Setter  Property="Margin" Value="5"/>
+                <Setter  Property="Padding" Value="5"/>
+                <Setter  Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter  Property="HasShadow" Value="True"/>
+                <Setter  Property="BorderColor" Value="Linen"/>
+            </Style>
+            <Style x:Key="ItemsCardViewStackLayoutStyle" x:Name="ItemsCardViewStackLayoutStyle" TargetType="StackLayout">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            </Style>
+            <Style x:Key="ItemsInsideCardViewStackLayoutStyle" x:Name="ItemsInsideCardViewStackLayoutStyle" TargetType="StackLayout">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Spacing" Value="8"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ItemsListView"
+                ItemsSource="{Binding Items}"
+                SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Style="{StaticResource FrameCardViewStyle}">
+                        <StackLayout x:DataType="model:Item" Style="{StaticResource ItemsCardViewStackLayoutStyle}">
+
+                            <StackLayout Style="{StaticResource ItemsInsideCardViewStackLayoutStyle}">
+                                <Frame Style="{StaticResource profileImageFrameStyle}">
+                                    <Image Style="{StaticResource profileImageStyle}" Source="sinfoto.png"/>
+                                </Frame>
+
+                                <StackLayout Style="{StaticResource DetailsStackLayout}">
+                                    <Label Text="{Binding Path=Text}" LineBreakMode="NoWrap" Style="{StaticResource NameLabel}" />
+
+                                    <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                                        <Image Source="nick_name.png" Style="{StaticResource imageStyle}"/>
+                                        <Label Text="{Binding Path=Description}" LineBreakMode="NoWrap" Style="{StaticResource JobTitleLabelStyle}"/>
+                                    </StackLayout>
+
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
+                                CommandParameter="{Binding .}">
+                                        </TapGestureRecognizer>
+                                    </StackLayout.GestureRecognizers>
+                                    <!--<Label Text="{Binding Text}" 
+                            LineBreakMode="NoWrap" 
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="16" />
+                                <Label Text="{Binding Description}" 
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemDetailTextStyle}"
+                            FontSize="13" />-->
+
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>
