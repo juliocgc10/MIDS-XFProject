@@ -16,13 +16,10 @@ namespace XFProject.Views
             txtNickName.Text = Preferences.Get("PhotoUser_NickName", string.Empty);
             txtEmail.Text = Preferences.Get("PhotoUser_Email", string.Empty);
 
-            //Task.Run(async () =>
-            //{
-            //    this.txtNickName.Text = await SecureStorage.GetAsync("PhotoUser_NickName");
-            //    this.txtEmail.Text = await SecureStorage.GetAsync("PhotoUser_Email");
-
-            //}
-            //);
+            if (!string.IsNullOrWhiteSpace(txtNickName.Text))
+            {
+                Shell.Current.GoToAsync(nameof(ItemsPage));
+            }
         }
 
         private async void ButtonLogin_Clicked(object sender, EventArgs e)

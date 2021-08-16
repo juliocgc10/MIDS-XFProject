@@ -2,16 +2,19 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="XFProject.Views.ItemsPage"
-             Title="Mis Fotos"
+             Title="{Binding Title}"
              xmlns:local="clr-namespace:XFProject.ViewModels"  
              xmlns:model="clr-namespace:XFProject.Models"  
              x:Name="BrowseItemsPage"
              xmlns:modelPhoto="clr-namespace:XFProject.Entities;assembly=XFProject.Entities">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Agregar Foto" Command="{Binding AddItemCommand}" />
+
 
         <ToolbarItem x:Name="tbNickName" />
+        <ToolbarItem Text="Agregar Foto" Command="{Binding AddItemCommand}" Order="Secondary"/>
+        <ToolbarItem Text="Otras Fotos" Command="{Binding ShowOtherPhotosCommand}" Order="Secondary" />
+        <ToolbarItem Text="Mis Fotos" Command="{Binding ShowMyPhotosCommand}" Order="Secondary" />
 
     </ContentPage.ToolbarItems>
     <!--
@@ -85,7 +88,6 @@
                 <DataTemplate x:DataType="modelPhoto:PhotoUserDto">
                     <Frame Style="{StaticResource FrameCardViewStyle}">
                         <StackLayout Style="{StaticResource ItemsCardViewStackLayoutStyle}">
-                            <!--x:DataType="model:Item"-->
 
                             <StackLayout Style="{StaticResource ItemsInsideCardViewStackLayoutStyle}">
                                 <Frame Style="{StaticResource profileImageFrameStyle}">
@@ -93,11 +95,20 @@
                                 </Frame>
 
                                 <StackLayout Style="{StaticResource DetailsStackLayout}">
-                                    <Label Text="{Binding Path=PhotoTitle}" LineBreakMode="NoWrap" Style="{StaticResource NameLabel}" />
-
                                     <StackLayout Style="{StaticResource ImageLabelStackLayout}">
-                                        <Image Source="nick_name.png" Style="{StaticResource imageStyle}"/>
+                                        <Image Source="icon_title.png" Style="{StaticResource imageStyle}"/>
+                                        <Label Text="Titulo:" LineBreakMode="NoWrap" Style="{StaticResource NameLabel}" />
+                                        <Label Text="{Binding Path=PhotoTitle}" LineBreakMode="NoWrap" Style="{StaticResource NameLabel}" />
+                                    </StackLayout>
+                                    <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                                        <Image Source="icon_description.png" Style="{StaticResource imageStyle}"/>
+                                        <Label Text="Descripción:" LineBreakMode="NoWrap" Style="{StaticResource JobTitleLabelStyle}"/>
                                         <Label Text="{Binding Path=PhotoDescription}" LineBreakMode="NoWrap" Style="{StaticResource JobTitleLabelStyle}"/>
+                                    </StackLayout>
+                                    <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                                        <Image Source="icon_user.png" Style="{StaticResource imageStyle}"/>
+                                        <Label Text="Autor:" LineBreakMode="NoWrap" Style="{StaticResource JobTitleLabelStyle}"/>
+                                        <Label Text="{Binding Path=NickNameAutor}" LineBreakMode="NoWrap" Style="{StaticResource JobTitleLabelStyle}"/>
                                     </StackLayout>
 
                                     <StackLayout.GestureRecognizers>
@@ -107,14 +118,6 @@
                                 CommandParameter="{Binding .}">
                                         </TapGestureRecognizer>
                                     </StackLayout.GestureRecognizers>
-                                    <!--<Label Text="{Binding Text}" 
-                            LineBreakMode="NoWrap" 
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16" />
-                                <Label Text="{Binding Description}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
-                            FontSize="13" />-->
 
                                 </StackLayout>
                             </StackLayout>
@@ -123,5 +126,10 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+
     </RefreshView>
+
+
+
 </ContentPage>

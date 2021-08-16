@@ -71,31 +71,7 @@ namespace XFProject.ViewModels
                 OnPropertyChanged();
             }
         }
-
-
-        //private ObservableCollection<LocationCustom> positionList;
-        //public ObservableCollection<LocationCustom> PositionList
-        //{
-        //    get => positionList;
-        //    set
-        //    {
-        //        positionList = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-
-        //private Location currentLocation;
-
-        //public Location CurrentLocation
-        //{
-        //    get => currentLocation;
-        //    set
-        //    {
-        //        currentLocation = value;
-        //        OnPropertyChanged();
-        //    }
-
-        //}
+       
 
         private CustomPin pinLocation;
         public CustomPin PinLocation
@@ -139,27 +115,14 @@ namespace XFProject.ViewModels
             {
 
                 HttpClient httpClient = new HttpClient();
-                var result = await httpClient.GetAsync($"https://dev-app-mids.azurewebsites.net/api/PhotoUser/{photoUserId}");
+                var result = await httpClient.GetAsync($"{AppConstants.ServiceEndpoint}/api/PhotoUser/{photoUserId}");
 
                 if (result.IsSuccessStatusCode)
                 {
                     var webPhotoUser = await result.Content.ReadAsStringAsync();
                     PhotoUserDto = JsonConvert.DeserializeObject<PhotoUserDto>(webPhotoUser);
-                    //PositionList = new ObservableCollection<LocationCustom>()
-                    //{
-                    //    new LocationCustom(
-                    //        "Test Address",
-                    //        "Test Location",
-                    //        new Position(Convert.ToDouble(PhotoUserDto.Latitude), Convert.ToDouble(PhotoUserDto.Longitude))
-                    //    )
-                    //    //new Position(Convert.ToDouble(PhotoUserDto.Latitude), Convert.ToDouble(PhotoUserDto.Longitude)) 
-                    //};
 
-                    //CurrentLocation = new Location(Convert.ToDouble(PhotoUserDto.Latitude), Convert.ToDouble(PhotoUserDto.Longitude));
-                    PinLocation = new CustomPin() { Label = PhotoUserDto.PhotoTitle, Latitude = Convert.ToDouble(PhotoUserDto.Latitude), Longitude = Convert.ToDouble(PhotoUserDto.Longitude) };                    
-
-                   
-
+                    PinLocation = new CustomPin() { Label = PhotoUserDto.PhotoTitle, Latitude = Convert.ToDouble(PhotoUserDto.Latitude), Longitude = Convert.ToDouble(PhotoUserDto.Longitude) };
                 }
             }
             catch (Exception)

@@ -8,6 +8,7 @@ using XFProject.Entities;
 using XFProject.Models;
 using XFProject.Views;
 using Newtonsoft.Json;
+using Xamarin.Essentials;
 
 namespace XFProject.ViewModels
 {
@@ -23,13 +24,16 @@ namespace XFProject.ViewModels
 
         private ObservableCollection<PhotoUserDto> photoUsers;
         public Command LoadPhotoUsersCommand { get; }
+        public Command ShowOtherPhotosCommand { get; }
+        public Command ShowMyPhotosCommand { get; }
+        
         public Command<PhotoUserDto> PhotoUserTapped { get; }
 
         private PhotoUserDto photoUser;
 
         public ItemsViewModel()
         {
-            Title = "Fotos";
+            Title = "Mis Fotos";
 
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
@@ -37,13 +41,15 @@ namespace XFProject.ViewModels
             AddItemCommand = new Command(OnAddItem);
 
             PhotoUsers = new ObservableCollection<PhotoUserDto>();
-            LoadPhotoUsersCommand = new Command(async () => await ExecuteLoadPhotoUsersCommand());
+            LoadPhotoUsersCommand = new Command(async (myPhotos) => await ExecuteLoadPhotoUsersCommand(true));
             PhotoUserTapped = new Command<PhotoUserDto>(OnTappedPhotoUser);
+            ShowOtherPhotosCommand = new Command(async (myPhotos) => await ExecuteLoadPhotoUsersCommand(false));
+            ShowMyPhotosCommand = new Command(async (myPhotos) => await ExecuteLoadPhotoUsersCommand(true));
         }
 
-        
 
-        private async Task ExecuteLoadPhotoUsersCommand()
+
+        private async Task ExecuteLoadPhotoUsersCommand(bool myPhotos)
         {
             IsBusy = true;
 
@@ -52,12 +58,16 @@ namespace XFProject.ViewModels
                 PhotoUsers.Clear();
 
                 HttpClient httpClient = new HttpClient();
-                var nickName = await Xamarin.Essentials.SecureStorage.GetAsync("PhotoUser_NickName");
-                var result = await httpClient.GetAsync($"https://dev-app-mids.azurewebsites.net/api/PhotoUser?autor={nickName}");
+
+                Title = myPhotos ? "Mis Fotos" : "Otras Fotos";
+
+                string nickName = Preferences.Get("PhotoUser_NickName", string.Empty);
+
+                HttpResponseMessage result = await httpClient.GetAsync($"{AppConstants.ServiceEndpoint}/api/PhotoUser?isMyPhotos={myPhotos}&autor={nickName}");
 
                 if (result.IsSuccessStatusCode)
                 {
-                    var webPhotoUsers = await result.Content.ReadAsStringAsync();
+                    string webPhotoUsers = await result.Content.ReadAsStringAsync();
                     PhotoUsers = JsonConvert.DeserializeObject<ObservableCollection<PhotoUserDto>>(webPhotoUsers);
                 }
 

@@ -1,22 +1,84 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="XFProject.Views.NewItemPage"
-             Shell.PresentationMode="ModalAnimated"
-             Title="New Item"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-             ios:Page.UseSafeArea="true">
-    <ContentPage.Content>
-        <StackLayout Spacing="3" Padding="15">
-            <Label Text="Text" FontSize="Medium" />
-            <Entry Text="{Binding Text, Mode=TwoWay}" FontSize="Medium" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+             x:Class="XFProject.Views.NewItemPage"             
+             Title="Cargar nueva foto"             
+             xmlns:viewmodels="clr-namespace:XFProject.ViewModels" xmlns:models="clr-namespace:XFProject.Models" 
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps" 
+             x:DataType="viewmodels:NewItemViewModel">
+    <!--<ContentPage.Content>-->
+    <ScrollView>
+        <StackLayout Spacing="20" Padding="15">
+            <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="icon_title.png" Style="{StaticResource imageStyle}"/>
+                    <Label Text="Título de la foto" Style="{StaticResource NameLabel}"/>
+                </StackLayout>
+
+                <Entry Style="{StaticResource EntryStyle}" Text="{Binding Path=PhotoUserDto.PhotoTitle, Mode=TwoWay}"/>
             </StackLayout>
+
+            <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="icon_description.png" Style="{StaticResource imageStyle}"/>
+                    <Label Text="Descripción de la foto" Style="{StaticResource NameLabel}"/>
+                </StackLayout>
+
+                <Entry Style="{StaticResource EntryStyle}" Text="{Binding Path=PhotoUserDto.PhotoDescription, Mode=TwoWay}"/>
+            </StackLayout>
+            
+            <StackLayout>
+                <!--<Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
+                        <Label Text="MediaPicker Sample!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" />
+                    </Frame>
+
+                    <Button Text="Pick Image" Clicked="PickPhoto_Clicked" />
+                    <Button Text="Take Image" Clicked="TakePhoto_Clicked" />-->
+                <!--<Image x:Name="resultImage"  BindingContext="{Binding }"/>-->
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="icon_addphoto2.png" Style="{StaticResource imageStyle}"/>
+                    <Label Text="Cargar foto" Style="{StaticResource NameLabel}"/>
+                </StackLayout>
+                <Button Text="Seleccionar foto" Command="{Binding PickPhotoCommand}"/>
+                <Button Text="Tomar foto" Command="{Binding TakePhotoCommand}"/>
+                <!--<Image Source="{Binding CamImage}"/>-->
+                <Image Source="{Binding PhotoPath}"/>
+            </StackLayout>
+
+           
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="icon_location.png" Style="{StaticResource imageStyle}"/>
+                    <Label Text="Ubicación" Style="{StaticResource NameLabel}"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Latitud: "/>
+                    <Label x:Name="lat" Text="{Binding Path=PhotoUserDto.Latitude, Mode=TwoWay}"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Longitud: "/>
+                    <Label x:Name="lon" Text="{Binding Path=PhotoUserDto.Longitude, Mode=TwoWay}"/>
+                </StackLayout>
+                <Button Text="Mostrar Mapa" Clicked="MostrarMapa_Clicked"/>
+                <Frame HeightRequest="300" WidthRequest="300" >
+                    <maps:Map x:Name="map" MapType="Street"></maps:Map>
+                </Frame>
+            </StackLayout>
+            <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="icon_email.png" Style="{StaticResource imageStyle}"/>
+                    <Label Text="Correo eléctronico" Style="{StaticResource NameLabel}"/>
+                </StackLayout>
+
+                <Entry Style="{StaticResource EntryStyle}" Text="{Binding Path=PhotoUserDto.Email, Mode=TwoWay}"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancelar" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Guardar" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+
         </StackLayout>
-    </ContentPage.Content>
-    
+    </ScrollView>
+    <!--</ContentPage.Content>-->
+
 </ContentPage>

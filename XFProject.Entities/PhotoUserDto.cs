@@ -117,7 +117,7 @@ namespace XFProject.Entities
 
         public string PhotoUrlComplete
         {
-            get => $"{pathUrl}{photoID}_{photoName}";
+            get => $"{pathUrl}{PhotoUserId}.jpg";
         }
 
         public string Email
@@ -129,6 +129,15 @@ namespace XFProject.Entities
                 OnPropertyChanged();
             }
         }
+
+        private string photoBase64;
+
+        public string PhotoBase64
+        {
+            get { return photoBase64; }
+            set { photoBase64 = value; }
+        }
+
 
         #endregion
 

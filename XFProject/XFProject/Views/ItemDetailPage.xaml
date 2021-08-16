@@ -8,23 +8,7 @@
              Title="{Binding Title}">
 
     <ScrollView>
-            <StackLayout Margin="15" >
-                <!--<Label Text="Text:" FontSize="Medium" />
-            <Label Text="{Binding PhotoUserDto.PhotoTitle}" FontSize="Small"/>
-            <Label Text="Description:" FontSize="Medium" />
-            <Label Text="{Binding PhotoUserDto.PhotoDescription}" FontSize="Small"/>-->
-
-                <StackLayout Style="{StaticResource ImageLabelStackLayout}">
-                <StackLayout Orientation="Horizontal">
-                    <Image Source="icon_imagen.png" Style="{StaticResource imageStyle}"/>
-                    <Label Text="Foto" Style="{StaticResource NameLabel}"/>
-                </StackLayout>
-
-                <Frame Style="{StaticResource profileImageFrameStyle}">
-                    <Image Style="{StaticResource profileImageStyle}" Source="{Binding Path=PhotoUserDto.PhotoUrlComplete}"/>
-                </Frame>
-            </StackLayout>
-
+        <StackLayout Spacing="20" Padding="15" >
             <StackLayout Style="{StaticResource ImageLabelStackLayout}">
                 <StackLayout Orientation="Horizontal">
                     <Image Source="icon_title.png" Style="{StaticResource imageStyle}"/>
@@ -42,20 +26,33 @@
 
                 <Label Text="{Binding Path=PhotoUserDto.PhotoDescription}" Style="{StaticResource LabelStyle}"/>
             </StackLayout>
+            
+            <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="icon_imagen.png" Style="{StaticResource imageStyle}"/>
+                    <Label Text="Foto" Style="{StaticResource NameLabel}"/>
+                </StackLayout>
+
+                <Frame Style="{StaticResource profileImageFrameStyle}" HeightRequest="200" WidthRequest="200">
+                    <Image Style="{StaticResource profileImageStyle}" Source="{Binding Path=PhotoUserDto.PhotoUrlComplete}"/>
+                </Frame>
+            </StackLayout>
+
+            
 
             <StackLayout Style="{StaticResource ImageLabelStackLayout}">
                 <StackLayout Orientation="Horizontal">
-                    <Image Source="icon_autor.png" Style="{StaticResource imageStyle}"/>
+                    <Image Source="icon_user.png" Style="{StaticResource imageStyle}"/>
                     <Label Text="Autor" Style="{StaticResource NameLabel}"/>
                 </StackLayout>
 
                 <Label Text="{Binding Path=PhotoUserDto.NickNameAutor}" Style="{StaticResource LabelStyle}"/>
             </StackLayout>
-                <StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <Image Source="icon_email.png" Style="{StaticResource imageStyle}"/>
-                        <Label Text="Ubicación" Style="{StaticResource NameLabel}"/>
-                    </StackLayout>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="icon_location.png" Style="{StaticResource imageStyle}"/>
+                    <Label Text="Ubicación" Style="{StaticResource NameLabel}"/>
+                </StackLayout>
                 <Frame HeightRequest="300" WidthRequest="300" >
                     <!--<maps:Map MapType="Street" ItemsSource="{Binding PositionList}">
                         <maps:Map.ItemTemplate>
@@ -66,7 +63,7 @@
                             </DataTemplate>
                         </maps:Map.ItemTemplate>
                     </maps:Map>-->
-                    
+
                     <models:CustomMap                    
                     CustomPins="{Binding PinLocation}"
                     HorizontalOptions="FillAndExpand"
@@ -74,8 +71,8 @@
                     MapType="Street"
                     VerticalOptions="FillAndExpand" />
                 </Frame>
-                </StackLayout>
-                <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+            </StackLayout>
+            <StackLayout Style="{StaticResource ImageLabelStackLayout}">
                 <StackLayout Orientation="Horizontal">
                     <Image Source="icon_email.png" Style="{StaticResource imageStyle}"/>
                     <Label Text="Correo eléctronico" Style="{StaticResource NameLabel}"/>
@@ -85,7 +82,7 @@
             </StackLayout>
 
 
-            </StackLayout>
+        </StackLayout>
     </ScrollView>
 
 </ContentPage>
