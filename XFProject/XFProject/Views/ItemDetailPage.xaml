@@ -1,14 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodels="clr-namespace:XFProject.ViewModels" x:DataType="viewmodels:ItemDetailViewModel"
+              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps" 
+             xmlns:models="clr-namespace:XFProject.Models"
              x:Class="XFProject.Views.ItemDetailPage"
              Title="{Binding Title}">
 
-    <StackLayout Spacing="20" Padding="15">
-        <Label Text="Text:" FontSize="Medium" />
-        <Label Text="{Binding Text}" FontSize="Small"/>
-        <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Description}" FontSize="Small"/>
-    </StackLayout>
-    
+    <ScrollView>
+            <StackLayout Margin="15" >
+                <!--<Label Text="Text:" FontSize="Medium" />
+            <Label Text="{Binding PhotoUserDto.PhotoTitle}" FontSize="Small"/>
+            <Label Text="Description:" FontSize="Medium" />
+            <Label Text="{Binding PhotoUserDto.PhotoDescription}" FontSize="Small"/>-->
+
+                <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="icon_imagen.png" Style="{StaticResource imageStyle}"/>
+                    <Label Text="Foto" Style="{StaticResource NameLabel}"/>
+                </StackLayout>
+
+                <Frame Style="{StaticResource profileImageFrameStyle}">
+                    <Image Style="{StaticResource profileImageStyle}" Source="{Binding Path=PhotoUserDto.PhotoUrlComplete}"/>
+                </Frame>
+            </StackLayout>
+
+            <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="icon_title.png" Style="{StaticResource imageStyle}"/>
+                    <Label Text="Título de la foto" Style="{StaticResource NameLabel}"/>
+                </StackLayout>
+
+                <Label Text="{Binding Path=PhotoUserDto.PhotoTitle}" Style="{StaticResource LabelStyle}"/>
+            </StackLayout>
+
+            <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="icon_description.png" Style="{StaticResource imageStyle}"/>
+                    <Label Text="Descripción de la foto" Style="{StaticResource NameLabel}"/>
+                </StackLayout>
+
+                <Label Text="{Binding Path=PhotoUserDto.PhotoDescription}" Style="{StaticResource LabelStyle}"/>
+            </StackLayout>
+
+            <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="icon_autor.png" Style="{StaticResource imageStyle}"/>
+                    <Label Text="Autor" Style="{StaticResource NameLabel}"/>
+                </StackLayout>
+
+                <Label Text="{Binding Path=PhotoUserDto.NickNameAutor}" Style="{StaticResource LabelStyle}"/>
+            </StackLayout>
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Image Source="icon_email.png" Style="{StaticResource imageStyle}"/>
+                        <Label Text="Ubicación" Style="{StaticResource NameLabel}"/>
+                    </StackLayout>
+                <Frame HeightRequest="300" WidthRequest="300" >
+                    <!--<maps:Map MapType="Street" ItemsSource="{Binding PositionList}">
+                        <maps:Map.ItemTemplate>
+                            <DataTemplate x:DataType="models:Location">
+                                <maps:Pin Position="{Binding Position}"
+                                              Address="{Binding Address}"
+                                              Label="{Binding Description}"/>
+                            </DataTemplate>
+                        </maps:Map.ItemTemplate>
+                    </maps:Map>-->
+                    
+                    <models:CustomMap                    
+                    CustomPins="{Binding PinLocation}"
+                    HorizontalOptions="FillAndExpand"
+                    IsShowingUser="true"
+                    MapType="Street"
+                    VerticalOptions="FillAndExpand" />
+                </Frame>
+                </StackLayout>
+                <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="icon_email.png" Style="{StaticResource imageStyle}"/>
+                    <Label Text="Correo eléctronico" Style="{StaticResource NameLabel}"/>
+                </StackLayout>
+
+                <Label Text="{Binding Path=PhotoUserDto.Email}" Style="{StaticResource LabelStyle}"/>
+            </StackLayout>
+
+
+            </StackLayout>
+    </ScrollView>
+
 </ContentPage>

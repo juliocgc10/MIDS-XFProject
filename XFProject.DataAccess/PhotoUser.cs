@@ -22,5 +22,7 @@ namespace XFProject.DataAccess
         public string NickNameAutor { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
+        public string PathUrl { get; set; }
+        public string Email { get; set; }
     }
 }

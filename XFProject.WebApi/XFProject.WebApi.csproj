@@ -182,6 +182,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="Files\Files.txt" />
+    <Content Include="Files\E2E9E53F-66DC-48B1-A77B-B3DFE46A46CD_foto.jpg" />
+    <Content Include="Files\05F80790-AB87-4F29-9701-FBDF6BD26AF9_foto23.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />

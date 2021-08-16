@@ -5,10 +5,14 @@
              Title="Mis Fotos"
              xmlns:local="clr-namespace:XFProject.ViewModels"  
              xmlns:model="clr-namespace:XFProject.Models"  
-             x:Name="BrowseItemsPage">
+             x:Name="BrowseItemsPage"
+             xmlns:modelPhoto="clr-namespace:XFProject.Entities;assembly=XFProject.Entities">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Agregar" Command="{Binding AddItemCommand}" />
+        <ToolbarItem Text="Agregar Foto" Command="{Binding AddItemCommand}" />
+
+        <ToolbarItem x:Name="tbNickName" />
+
     </ContentPage.ToolbarItems>
     <!--
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
@@ -73,32 +77,33 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadPhotoUsersCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <CollectionView x:Name="ItemsListView"
-                ItemsSource="{Binding Items}"
+                ItemsSource="{Binding PhotoUsers}"
                 SelectionMode="None">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="modelPhoto:PhotoUserDto">
                     <Frame Style="{StaticResource FrameCardViewStyle}">
-                        <StackLayout x:DataType="model:Item" Style="{StaticResource ItemsCardViewStackLayoutStyle}">
+                        <StackLayout Style="{StaticResource ItemsCardViewStackLayoutStyle}">
+                            <!--x:DataType="model:Item"-->
 
                             <StackLayout Style="{StaticResource ItemsInsideCardViewStackLayoutStyle}">
                                 <Frame Style="{StaticResource profileImageFrameStyle}">
-                                    <Image Style="{StaticResource profileImageStyle}" Source="sinfoto.png"/>
+                                    <Image Style="{StaticResource profileImageStyle}" Source="{Binding Path=PhotoUrlComplete}"/>
                                 </Frame>
 
                                 <StackLayout Style="{StaticResource DetailsStackLayout}">
-                                    <Label Text="{Binding Path=Text}" LineBreakMode="NoWrap" Style="{StaticResource NameLabel}" />
+                                    <Label Text="{Binding Path=PhotoTitle}" LineBreakMode="NoWrap" Style="{StaticResource NameLabel}" />
 
                                     <StackLayout Style="{StaticResource ImageLabelStackLayout}">
                                         <Image Source="nick_name.png" Style="{StaticResource imageStyle}"/>
-                                        <Label Text="{Binding Path=Description}" LineBreakMode="NoWrap" Style="{StaticResource JobTitleLabelStyle}"/>
+                                        <Label Text="{Binding Path=PhotoDescription}" LineBreakMode="NoWrap" Style="{StaticResource JobTitleLabelStyle}"/>
                                     </StackLayout>
 
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=PhotoUserTapped}"		
                                 CommandParameter="{Binding .}">
                                         </TapGestureRecognizer>
                                     </StackLayout.GestureRecognizers>

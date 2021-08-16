@@ -19,6 +19,8 @@ namespace XFProject.Entities
         private string latitude;
         private string longitude;
         private Guid photoID;
+        private string pathUrl;
+        private string email;
         #endregion
 
         #region Properties
@@ -101,6 +103,33 @@ namespace XFProject.Entities
                 OnPropertyChanged();
             }
         }
+
+        public string PathUrl
+        {
+            get => pathUrl;
+            set
+            {
+                pathUrl = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public string PhotoUrlComplete
+        {
+            get => $"{pathUrl}{photoID}_{photoName}";
+        }
+
+        public string Email
+        {
+            get => email;
+            set
+            {
+                email = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
 

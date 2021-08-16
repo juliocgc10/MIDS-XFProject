@@ -11,15 +11,18 @@ namespace XFProject.WebApi.Controllers
 {
     public class PhotoUserController : ApiController
     {
-        private Repository repository;
+        private IRepositoryPhotoUser repository;
         public PhotoUserController()
         {
-            repository = new Repository();
+            repository = new RepositoryPhotoUser();
         }
         // GET api/values
-        public IEnumerable<PhotoUserDto> Get()
+        public IEnumerable<PhotoUserDto> Get(string autor = null)
         {
-            return repository.GetPhotoUsers();
+            if (string.IsNullOrWhiteSpace(autor))
+                return repository.GetPhotoUsers();
+            else
+                return repository.GetPhotoUsers(x => x.NickNameAutor.Trim().ToUpper() == autor.Trim().ToUpper());
         }
 
         // GET api/values/5

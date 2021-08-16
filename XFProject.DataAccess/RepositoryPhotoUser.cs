@@ -1,71 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using XFProject.Entities;
 
 namespace XFProject.DataAccess
 {
-    public class Repository
+    public class RepositoryPhotoUser : IRepositoryPhotoUser
     {
-        private PhotoUserDto ConvertToEntitiesPhotoUser(PhotoUser photoUser)
-        {
-            return new PhotoUserDto()
-            {
-                PhotoUserId = photoUser.PhotoUserID,
-                Latitude = photoUser.Latitude,
-                Longitude = photoUser.Longitude,
-                NickNameAutor = photoUser.NickNameAutor,
-                PhotoDescription = photoUser.PhotoDescription,
-                PhotoID = photoUser.PhotoID,
-                PhotoName = photoUser.PhotoName,
-                PhotoTitle = photoUser.PhotoTitle
-            };
-
-        }
-
-        private PhotoUser ConvertFromEntitiesPhotoUser(PhotoUserDto photoUserDto)
-        {
-            return new PhotoUser()
-            {
-
-                PhotoUserID = photoUserDto.PhotoUserId,
-                Latitude = photoUserDto.Latitude,
-                Longitude = photoUserDto.Longitude,
-                NickNameAutor = photoUserDto.NickNameAutor,
-                PhotoDescription = photoUserDto.PhotoDescription,
-                PhotoID = photoUserDto.PhotoID,
-                PhotoName = photoUserDto.PhotoName,
-                PhotoTitle = photoUserDto.PhotoTitle
-            };
-        }
-
-
-        private void ConvertFromEntitiesPhotoUser(PhotoUserDto photoUserDto, ref PhotoUser photoUserBD)
-        {
-
-            photoUserBD.PhotoUserID = photoUserDto.PhotoUserId;
-            photoUserBD.Latitude = photoUserDto.Latitude;
-            photoUserBD.Longitude = photoUserDto.Longitude;
-            photoUserBD.NickNameAutor = photoUserDto.NickNameAutor;
-            photoUserBD.PhotoDescription = photoUserDto.PhotoDescription;
-            photoUserBD.PhotoID = photoUserDto.PhotoID;
-            photoUserBD.PhotoName = photoUserDto.PhotoName;
-            photoUserBD.PhotoTitle = photoUserDto.PhotoTitle;
-
-
-        }
-        public List<PhotoUserDto> GetPhotoUsers()
+        public List<PhotoUserDto> GetPhotoUsers(Expression<Func<PhotoUser, bool>> predicate = null)
         {
             try
             {
                 List<PhotoUserDto> PhotoUsers = new List<PhotoUserDto>();
+                IEnumerable<PhotoUser> photos;
                 using (cpdsEntities contex = new cpdsEntities())
                 {
-                    contex.PhotoUser.ToList().ForEach(emp =>
+                    if (predicate != null)
                     {
-                        PhotoUsers.Add(ConvertToEntitiesPhotoUser(emp));
+                        photos = contex.PhotoUser.Where(predicate);
+                    }
+                    else
+                        photos = contex.PhotoUser;
+
+                    photos.ToList().ForEach(photo =>
+                    {
+                        PhotoUsers.Add(ConvertToEntitiesPhotoUser(photo));
                     }
                     );
                 }
@@ -168,5 +130,59 @@ namespace XFProject.DataAccess
                 throw;
             }
         }
+
+        private PhotoUserDto ConvertToEntitiesPhotoUser(PhotoUser photoUser)
+        {
+            return new PhotoUserDto()
+            {
+                PhotoUserId = photoUser.PhotoUserID,
+                Latitude = photoUser.Latitude,
+                Longitude = photoUser.Longitude,
+                NickNameAutor = photoUser.NickNameAutor,
+                PhotoDescription = photoUser.PhotoDescription,
+                PhotoID = photoUser.PhotoID,
+                PhotoName = photoUser.PhotoName,
+                PhotoTitle = photoUser.PhotoTitle,
+                PathUrl = photoUser.PathUrl,
+                Email = photoUser.Email
+            };
+
+        }
+
+        private PhotoUser ConvertFromEntitiesPhotoUser(PhotoUserDto photoUserDto)
+        {
+            return new PhotoUser()
+            {
+
+                PhotoUserID = photoUserDto.PhotoUserId,
+                Latitude = photoUserDto.Latitude,
+                Longitude = photoUserDto.Longitude,
+                NickNameAutor = photoUserDto.NickNameAutor,
+                PhotoDescription = photoUserDto.PhotoDescription,
+                PhotoID = photoUserDto.PhotoID,
+                PhotoName = photoUserDto.PhotoName,
+                PhotoTitle = photoUserDto.PhotoTitle,
+                PathUrl = photoUserDto.PathUrl,
+                Email = photoUserDto.Email
+            };
+        }
+
+        private void ConvertFromEntitiesPhotoUser(PhotoUserDto photoUserDto, ref PhotoUser photoUserBD)
+        {
+
+            photoUserBD.PhotoUserID = photoUserDto.PhotoUserId;
+            photoUserBD.Latitude = photoUserDto.Latitude;
+            photoUserBD.Longitude = photoUserDto.Longitude;
+            photoUserBD.NickNameAutor = photoUserDto.NickNameAutor;
+            photoUserBD.PhotoDescription = photoUserDto.PhotoDescription;
+            photoUserBD.PhotoID = photoUserDto.PhotoID;
+            photoUserBD.PhotoName = photoUserDto.PhotoName;
+            photoUserBD.PhotoTitle = photoUserDto.PhotoTitle;
+            photoUserBD.PathUrl = photoUserDto.PathUrl;
+            photoUserBD.Email = photoUserDto.Email;
+
+        }
+
+        
     }
 }

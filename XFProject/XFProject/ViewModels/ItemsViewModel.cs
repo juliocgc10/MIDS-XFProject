@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using XFProject.Entities;
 using XFProject.Models;
 using XFProject.Views;
+using Newtonsoft.Json;
 
 namespace XFProject.ViewModels
 {
@@ -18,37 +20,46 @@ namespace XFProject.ViewModels
         public Command AddItemCommand { get; }
         public Command<Item> ItemTapped { get; }
 
+
         private ObservableCollection<PhotoUserDto> photoUsers;
+        public Command LoadPhotoUsersCommand { get; }
+        public Command<PhotoUserDto> PhotoUserTapped { get; }
+
         private PhotoUserDto photoUser;
 
         public ItemsViewModel()
         {
-            Title = "Browse";
+            Title = "Fotos";
+
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            //PhotoUsers = new Command(ExecuteLoadPhotoUsersCommand);
-
             ItemTapped = new Command<Item>(OnItemSelected);
-
             AddItemCommand = new Command(OnAddItem);
+
+            PhotoUsers = new ObservableCollection<PhotoUserDto>();
+            LoadPhotoUsersCommand = new Command(async () => await ExecuteLoadPhotoUsersCommand());
+            PhotoUserTapped = new Command<PhotoUserDto>(OnTappedPhotoUser);
         }
 
-        private Task ExecuteLoadPhotoUsersCommand()
+        
+
+        private async Task ExecuteLoadPhotoUsersCommand()
         {
             IsBusy = true;
 
             try
             {
-                Items.Clear();
+                PhotoUsers.Clear();
 
-                PhotoUsers = new ObservableCollection<PhotoUserDto>{
-                new PhotoUserDto() { PhotoTitle = "Prueba 1", PhotoName = "Nombre 1", PhotoDescription = "Desripción 1", NickNameAutor = "Autor 1", Latitude = "19.6157681", Longitude = "-99.0239452" },
-                new PhotoUserDto() { PhotoTitle = "Prueba 2", PhotoName = "Nombre 2", PhotoDescription = "Desripción 2", NickNameAutor = "Autor 2", Latitude = "19.6157681", Longitude = "-99.0239452" },
-                new PhotoUserDto() { PhotoTitle = "Prueba 3", PhotoName = "Nombre 3", PhotoDescription = "Desripción 3", NickNameAutor = "Autor 3", Latitude = "19.6157681", Longitude = "-99.0239452" },
-                new PhotoUserDto() { PhotoTitle = "Prueba 4", PhotoName = "Nombre 4", PhotoDescription = "Desripción 4", NickNameAutor = "Autor 4", Latitude = "19.6157681", Longitude = "-99.0239452" },
-                new PhotoUserDto() { PhotoTitle = "Prueba 5", PhotoName = "Nombre 5", PhotoDescription = "Desripción 5", NickNameAutor = "Autor 5", Latitude = "19.6157681", Longitude = "-99.0239452" }
-                };
-                ;
+                HttpClient httpClient = new HttpClient();
+                var nickName = await Xamarin.Essentials.SecureStorage.GetAsync("PhotoUser_NickName");
+                var result = await httpClient.GetAsync($"https://dev-app-mids.azurewebsites.net/api/PhotoUser?autor={nickName}");
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var webPhotoUsers = await result.Content.ReadAsStringAsync();
+                    PhotoUsers = JsonConvert.DeserializeObject<ObservableCollection<PhotoUserDto>>(webPhotoUsers);
+                }
 
 
             }
@@ -60,7 +71,6 @@ namespace XFProject.ViewModels
             {
                 IsBusy = false;
             }
-            return Task.Run(() => PhotoUsers);
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -121,6 +131,15 @@ namespace XFProject.ViewModels
                 photoUser = value;
                 //OnItemSelected(value);
             }
+        }
+
+        private async void OnTappedPhotoUser(PhotoUserDto obj)
+        {
+            if (obj == null)
+                return;
+
+            // This will push the ItemDetailPage onto the navigation stack
+            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.PhotoUserId)}={obj.PhotoUserId}");
         }
 
         private async void OnAddItem(object obj)

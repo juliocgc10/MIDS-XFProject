@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XFProject.Models;
@@ -21,6 +22,7 @@ namespace XFProject.Views
             InitializeComponent();
 
             BindingContext = _viewModel = new ItemsViewModel();
+            tbNickName.Text = $"Autor: {Preferences.Get("PhotoUser_NickName", string.Empty)}";
         }
 
         protected override void OnAppearing()

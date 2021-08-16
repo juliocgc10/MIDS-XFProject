@@ -17,6 +17,8 @@
           <Property Name="NickNameAutor" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Latitude" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Longitude" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PathUrl" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityContainer Name="cpdsModelStoreContainer">
           <EntitySet Name="PhotoUser" EntityType="Self.PhotoUser" Schema="dbo" store:Type="Tables" />
@@ -40,6 +42,8 @@
           <Property Name="NickNameAutor" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Latitude" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Longitude" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PathUrl" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -50,6 +54,8 @@
           <EntitySetMapping Name="PhotoUser">
             <EntityTypeMapping TypeName="cpdsModel.PhotoUser">
               <MappingFragment StoreEntitySet="PhotoUser">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PathUrl" ColumnName="PathUrl" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="NickNameAutor" ColumnName="NickNameAutor" />

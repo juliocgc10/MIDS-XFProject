@@ -8,6 +8,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="Accent">#96d1ff</Color>
+
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -27,6 +29,70 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
-        </ResourceDictionary>        
+
+            <Style x:Key="NameLabel" x:Name="NameLabel" TargetType="Label">
+                <Setter  Property="FontSize" Value="14"/>
+                <Setter  Property="TextColor" Value="Black"/>
+                <Setter  Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="ImageLabelStackLayout" x:Name="ImageLabelStackLayout" TargetType="StackLayout" >
+                <Setter  Property="Orientation" Value="Vertical"/>
+            </Style>
+            <Style x:Key="imageStyle" x:Name="imageStyle" TargetType="Image">
+                <Setter  Property="WidthRequest" Value="26"/>
+                <Setter  Property="HeightRequest" Value="26"/>
+            </Style>
+            <Style x:Key="EntryStyle" x:Name="EntryStyle" TargetType="Entry">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            </Style>
+            <Style x:Key="LabelStyle" x:Name="LabelStyle" TargetType="Label">
+                <Setter  Property="FontSize" Value="16"/>
+            </Style>
+         
+            <Style x:Key="JobTitleLabelStyle" x:Name="JobTitleLabelStyle" TargetType="Label" BasedOn="{StaticResource LabelStyle}">
+                <Setter  Property="VerticalTextAlignment" Value="Center"/>
+                <Setter  Property="VerticalOptions" Value="Center"/>
+                <Setter  Property="FontAttributes" Value="Bold"/>
+                <Setter  Property="TextColor" Value="Gray"/>
+            </Style>
+           
+            <Style x:Key="DetailsStackLayout" x:Name="DetailsStackLayout" TargetType="StackLayout" >
+                <Setter  Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter  Property="VerticalOptions" Value="FillAndExpand"/>
+                <Setter  Property="Spacing" Value="2"/>
+            </Style>
+           
+            <Style x:Key="profileImageStyle" x:Name="profileImageStyle" TargetType="Image">
+                <Setter  Property="WidthRequest" Value="120"/>
+                <Setter  Property="HeightRequest" Value="100"/>
+                <Setter  Property="Aspect" Value="AspectFit"/>
+            </Style>
+            <Style x:Key="profileImageFrameStyle" x:Name="profileImageFrameStyle" TargetType="Frame">
+                <Setter  Property="CornerRadius" Value="5"/>
+                <Setter  Property="Margin" Value="0"/>
+                <Setter  Property="Padding" Value="0"/>
+                <Setter  Property="IsClippedToBounds" Value="True"/>
+            </Style>
+            <Style x:Key="FrameCardViewStyle" x:Name="FrameCardViewStyle" TargetType="Frame">
+                <Setter  Property="CornerRadius" Value="5"/>
+                <Setter  Property="Margin" Value="5"/>
+                <Setter  Property="Padding" Value="5"/>
+                <Setter  Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter  Property="HasShadow" Value="True"/>
+                <Setter  Property="BorderColor" Value="Linen"/>
+            </Style>
+            <Style x:Key="ItemsCardViewStackLayoutStyle" x:Name="ItemsCardViewStackLayoutStyle" TargetType="StackLayout">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            </Style>
+            <Style x:Key="ItemsInsideCardViewStackLayoutStyle" x:Name="ItemsInsideCardViewStackLayoutStyle" TargetType="StackLayout">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Spacing" Value="8"/>
+            </Style>
+
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

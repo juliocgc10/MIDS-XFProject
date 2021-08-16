@@ -1,12 +1,20 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
+using XFProject.Entities;
 using XFProject.Models;
+
 
 namespace XFProject.ViewModels
 {
-    [QueryProperty(nameof(ItemId), nameof(ItemId))]
+    [QueryProperty(nameof(PhotoUserId), nameof(PhotoUserId))]
     public class ItemDetailViewModel : BaseViewModel
     {
         private string itemId;
@@ -39,6 +47,77 @@ namespace XFProject.ViewModels
             }
         }
 
+        private int photoUserId;
+        private PhotoUserDto photoUserDto;
+
+        public int PhotoUserId
+        {
+            get => photoUserId;
+            set
+            {
+                photoUserId = value;
+                OnPropertyChanged();
+                LoadPhotoUser(value);
+            }
+        }
+
+        public PhotoUserDto PhotoUserDto
+        {
+            get => photoUserDto;
+
+            set
+            {
+                photoUserDto = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        //private ObservableCollection<LocationCustom> positionList;
+        //public ObservableCollection<LocationCustom> PositionList
+        //{
+        //    get => positionList;
+        //    set
+        //    {
+        //        positionList = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+
+        //private Location currentLocation;
+
+        //public Location CurrentLocation
+        //{
+        //    get => currentLocation;
+        //    set
+        //    {
+        //        currentLocation = value;
+        //        OnPropertyChanged();
+        //    }
+
+        //}
+
+        private CustomPin pinLocation;
+        public CustomPin PinLocation
+        {
+            get => pinLocation;
+            set
+            {
+                pinLocation = value;
+                OnPropertyChanged();
+            }
+
+        }
+
+        public ItemDetailViewModel()
+        {
+            base.Title = "Detalle de la foto";
+
+
+        }
+
+
+
         public async void LoadItemId(string itemId)
         {
             try
@@ -47,6 +126,41 @@ namespace XFProject.ViewModels
                 Id = item.Id;
                 Text = item.Text;
                 Description = item.Description;
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Failed to Load Item");
+            }
+        }
+
+        public async void LoadPhotoUser(int photoUserId)
+        {
+            try
+            {
+
+                HttpClient httpClient = new HttpClient();
+                var result = await httpClient.GetAsync($"https://dev-app-mids.azurewebsites.net/api/PhotoUser/{photoUserId}");
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var webPhotoUser = await result.Content.ReadAsStringAsync();
+                    PhotoUserDto = JsonConvert.DeserializeObject<PhotoUserDto>(webPhotoUser);
+                    //PositionList = new ObservableCollection<LocationCustom>()
+                    //{
+                    //    new LocationCustom(
+                    //        "Test Address",
+                    //        "Test Location",
+                    //        new Position(Convert.ToDouble(PhotoUserDto.Latitude), Convert.ToDouble(PhotoUserDto.Longitude))
+                    //    )
+                    //    //new Position(Convert.ToDouble(PhotoUserDto.Latitude), Convert.ToDouble(PhotoUserDto.Longitude)) 
+                    //};
+
+                    //CurrentLocation = new Location(Convert.ToDouble(PhotoUserDto.Latitude), Convert.ToDouble(PhotoUserDto.Longitude));
+                    PinLocation = new CustomPin() { Label = PhotoUserDto.PhotoTitle, Latitude = Convert.ToDouble(PhotoUserDto.Latitude), Longitude = Convert.ToDouble(PhotoUserDto.Longitude) };                    
+
+                   
+
+                }
             }
             catch (Exception)
             {
