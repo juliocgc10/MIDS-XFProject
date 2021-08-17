@@ -2,13 +2,49 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:viewmodels="clr-namespace:XFProject.ViewModels" x:DataType="viewmodels:LoginViewModel"
              mc:Ignorable="d"
              x:Class="XFProject.Views.LoginPage"
              Shell.NavBarIsVisible="False">
     <ContentPage.Content>
-        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
-            <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
-        </StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                    <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">
+                        <Image Source="cpds.png" VerticalOptions="Center" HeightRequest="120" />
+                    </ContentView>
+                </StackLayout>
+            </StackLayout>
+            <ScrollView Grid.Row="1">
+                <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
+                    <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="icon_user.png" Style="{StaticResource imageStyle}"/>
+                            <Label Text="Nick name" Style="{StaticResource NameLabel}"/>
+                        </StackLayout>
+                        <Entry Style="{StaticResource EntryStyle}" x:Name="txtNickName" Text="{Binding Path=NickName, Mode=TwoWay}"/>
+                    </StackLayout>
+                    <StackLayout Style="{StaticResource ImageLabelStackLayout}">
+
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="icon_email.png" Style="{StaticResource imageStyle}"/>
+                            <Label Text="Correo electrónico" Style="{StaticResource NameLabel}"/>
+                        </StackLayout>
+                        <Entry Style="{StaticResource EntryStyle}" x:Name="txtEmail" Text="{Binding Path=Email, Mode=TwoWay}"/>
+                    </StackLayout>
+                    <!--Clicked="ButtonLogin_Clicked"-->
+                    <!--Command="{Binding LoginCommand}"-->
+                    <Button Margin="0,10,0,0" Text="Guardar" 
+                             Command="{Binding LoginCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

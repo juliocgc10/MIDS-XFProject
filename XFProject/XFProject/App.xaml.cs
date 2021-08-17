@@ -1,4 +1,5 @@
 ﻿using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XFProject.Services;
@@ -12,7 +13,9 @@ namespace XFProject
         public App()
         {
             InitializeComponent();
-            MainPage = new AppShell();
+
+            MainPage = string.IsNullOrWhiteSpace(Preferences.Get("PhotoUser_NickName", string.Empty)) ? new LoginPage() : (Page)new AppShell();
+
         }
 
         protected override void OnStart()

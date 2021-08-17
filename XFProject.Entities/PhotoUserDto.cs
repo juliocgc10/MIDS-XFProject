@@ -117,7 +117,7 @@ namespace XFProject.Entities
 
         public string PhotoUrlComplete
         {
-            get => $"{pathUrl}{PhotoUserId}.jpg";
+            get => $"{pathUrl}{PhotoID.ToString().ToLower()}.jpg";
         }
 
         public string Email

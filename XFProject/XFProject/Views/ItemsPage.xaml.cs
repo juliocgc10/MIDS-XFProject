@@ -19,7 +19,7 @@ namespace XFProject.Views
 
         public ItemsPage()
         {
-            InitializeComponent();
+            InitializeComponent();            
 
             BindingContext = _viewModel = new ItemsViewModel();
             tbNickName.Text = $"Autor: {Preferences.Get("PhotoUser_NickName", string.Empty)}";

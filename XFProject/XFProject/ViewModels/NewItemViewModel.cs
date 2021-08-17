@@ -67,7 +67,7 @@ namespace XFProject.ViewModels
 
             TakePhotoCommand = new Command(OnTakePhoto);
             PickPhotoCommand = new Command(OnPickPhoto);
-        }       
+        }
 
         #endregion
 
@@ -84,7 +84,7 @@ namespace XFProject.ViewModels
         private async void OnCancel()
         {
             // This will pop the current page off the navigation stack
-             await Shell.Current.GoToAsync(nameof(Views.ItemsPage));
+            await Shell.Current.GoToAsync(nameof(Views.ItemsPage));
         }
 
         private async void OnSave()
@@ -108,7 +108,7 @@ namespace XFProject.ViewModels
                 });
 
                 // This will pop the current page off the navigation stack
-                await Shell.Current.GoToAsync("..");
+                await Shell.Current.GoToAsync(nameof(Views.ItemsPage));
             }
             else
             {
@@ -128,7 +128,7 @@ namespace XFProject.ViewModels
         {
             var photo = await MediaPicker.CapturePhotoAsync();
             await LoadPhotoAsync(photo);
-        }        
+        }
 
         private async Task LoadPhotoAsync(FileResult photo)
         {
@@ -160,7 +160,7 @@ namespace XFProject.ViewModels
 
             await LoadPickPhotoAsync(result);
 
-            
+
         }
 
 
@@ -183,12 +183,7 @@ namespace XFProject.ViewModels
                 }
             }
 
-            //if (result != null)
-            //{
-            //    var stream = await result.OpenReadAsync();
 
-            //    resultImage.Source = ImageSource.FromStream(() => stream);
-            //}
             PhotoPath = newFile;
         }
 

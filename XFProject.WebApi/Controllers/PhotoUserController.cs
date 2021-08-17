@@ -45,7 +45,7 @@ namespace XFProject.WebApi.Controllers
         {
             var obj = repository.InsertPhotoUser(value);
 
-            SaveImage(value.PhotoBase64, value.PhotoUserId.ToString());
+            SaveImage(value.PhotoBase64, value.PhotoID.ToString().ToLower());
             return obj;
         }
 
