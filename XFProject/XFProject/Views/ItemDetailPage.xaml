@@ -54,16 +54,6 @@
                     <Label Text="Ubicación" Style="{StaticResource NameLabel}"/>
                 </StackLayout>
                 <Frame HeightRequest="300" WidthRequest="300" >
-                    <!--<maps:Map MapType="Street" ItemsSource="{Binding PositionList}">
-                        <maps:Map.ItemTemplate>
-                            <DataTemplate x:DataType="models:Location">
-                                <maps:Pin Position="{Binding Position}"
-                                              Address="{Binding Address}"
-                                              Label="{Binding Description}"/>
-                            </DataTemplate>
-                        </maps:Map.ItemTemplate>
-                    </maps:Map>-->
-
                     <models:CustomMap                    
                     CustomPins="{Binding PinLocation}"
                     HorizontalOptions="FillAndExpand"

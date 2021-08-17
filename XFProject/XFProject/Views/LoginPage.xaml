@@ -37,8 +37,7 @@
                         </StackLayout>
                         <Entry Style="{StaticResource EntryStyle}" x:Name="txtEmail" Text="{Binding Path=Email, Mode=TwoWay}"/>
                     </StackLayout>
-                    <!--Clicked="ButtonLogin_Clicked"-->
-                    <!--Command="{Binding LoginCommand}"-->
+                    
                     <Button Margin="0,10,0,0" Text="Guardar" 
                              Command="{Binding LoginCommand}"
                         BackgroundColor="{StaticResource Primary}"

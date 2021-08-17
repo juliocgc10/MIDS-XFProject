@@ -9,9 +9,12 @@ namespace XFProject.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
+        #region Fields
         private string nickName;
         private string email;
+        #endregion
 
+        #region Properties
         public string NickName
         {
             get => nickName;
@@ -29,21 +32,26 @@ namespace XFProject.ViewModels
                 email = value;
                 OnPropertyChanged();
             }
-        }
+        } 
+        #endregion
 
         public Command LoginCommand { get; }
 
+        #region Constructor
         public LoginViewModel()
         {
             LoginCommand = new Command(OnLoginClicked);
         }
+        #endregion
 
+        #region Methods
         private void OnLoginClicked(object obj)
         {
             Preferences.Clear();
             Preferences.Set("PhotoUser_NickName", NickName);
             Preferences.Set("PhotoUser_Email", Email);
             App.Current.MainPage = new AppShell();
-        }
+        } 
+        #endregion
     }
 }

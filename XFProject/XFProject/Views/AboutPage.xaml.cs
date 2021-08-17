@@ -16,11 +16,6 @@ namespace XFProject.Views
             txtNickName.Text = Preferences.Get("PhotoUser_NickName", string.Empty);
             txtEmail.Text = Preferences.Get("PhotoUser_Email", string.Empty);
 
-            //if (!string.IsNullOrWhiteSpace(txtNickName.Text))
-            //{
-            //    Shell.Current.GoToAsync(nameof(ItemsPage));
-            //    //Shell.Current.GoToAsync($"//{nameof(ItemsPage)}");
-            //}
         }
 
         private async void ButtonLogin_Clicked(object sender, EventArgs e)
@@ -29,6 +24,7 @@ namespace XFProject.Views
             Preferences.Set("PhotoUser_NickName", txtNickName.Text);
             Preferences.Set("PhotoUser_Email", txtEmail.Text);
             await this.DisplayAlert("Ingreso", "Los datos se guardarán", "Aceptar");
+            App.Current.MainPage = new AppShell();
         }
 
     }

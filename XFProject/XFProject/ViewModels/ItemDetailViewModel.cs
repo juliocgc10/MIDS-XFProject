@@ -17,39 +17,13 @@ namespace XFProject.ViewModels
     [QueryProperty(nameof(PhotoUserId), nameof(PhotoUserId))]
     public class ItemDetailViewModel : BaseViewModel
     {
-        private string itemId;
-        private string text;
-        private string description;
-        public string Id { get; set; }
-
-        public string Text
-        {
-            get => text;
-            set => SetProperty(ref text, value);
-        }
-
-        public string Description
-        {
-            get => description;
-            set => SetProperty(ref description, value);
-        }
-
-        public string ItemId
-        {
-            get
-            {
-                return itemId;
-            }
-            set
-            {
-                itemId = value;
-                LoadItemId(value);
-            }
-        }
-
+        #region Fields                
+        private CustomPin pinLocation;
         private int photoUserId;
         private PhotoUserDto photoUserDto;
+        #endregion
 
+        #region Properties            
         public int PhotoUserId
         {
             get => photoUserId;
@@ -71,9 +45,7 @@ namespace XFProject.ViewModels
                 OnPropertyChanged();
             }
         }
-       
 
-        private CustomPin pinLocation;
         public CustomPin PinLocation
         {
             get => pinLocation;
@@ -84,31 +56,16 @@ namespace XFProject.ViewModels
             }
 
         }
+        #endregion
 
+        #region Constructors
         public ItemDetailViewModel()
         {
             base.Title = "Detalle de la foto";
-
-
         }
+        #endregion
 
-
-
-        public async void LoadItemId(string itemId)
-        {
-            try
-            {
-                var item = await DataStore.GetItemAsync(itemId);
-                Id = item.Id;
-                Text = item.Text;
-                Description = item.Description;
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("Failed to Load Item");
-            }
-        }
-
+        #region Methods        
         public async void LoadPhotoUser(int photoUserId)
         {
             try
@@ -130,5 +87,6 @@ namespace XFProject.ViewModels
                 Debug.WriteLine("Failed to Load Item");
             }
         }
+        #endregion
     }
 }

@@ -14,41 +14,56 @@ namespace XFProject.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        private Item _selectedItem;
-
-        public ObservableCollection<Item> Items { get; }
-        public Command LoadItemsCommand { get; }
-        public Command AddItemCommand { get; }
-        public Command<Item> ItemTapped { get; }
-
-
+        #region Fields
+        private PhotoUserDto photoUser;
         private ObservableCollection<PhotoUserDto> photoUsers;
+        #endregion
+
+        #region Properties
+        public ObservableCollection<PhotoUserDto> PhotoUsers
+        {
+            get => photoUsers;
+            set
+            {
+                photoUsers = value;
+                OnPropertyChanged();
+            }
+        }
+        public PhotoUserDto PhotoUser
+        {
+            get => photoUser;
+
+            set
+            {
+                photoUser = value;
+            }
+        }
+        #endregion
+
+        #region Commands
+        public Command AddItemCommand { get; }
         public Command LoadPhotoUsersCommand { get; }
         public Command ShowOtherPhotosCommand { get; }
         public Command ShowMyPhotosCommand { get; }
-        
         public Command<PhotoUserDto> PhotoUserTapped { get; }
 
-        private PhotoUserDto photoUser;
+        #endregion
 
+        #region Constructors
         public ItemsViewModel()
         {
             Title = "Mis Fotos";
 
-            Items = new ObservableCollection<Item>();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            ItemTapped = new Command<Item>(OnItemSelected);
             AddItemCommand = new Command(OnAddItem);
-
             PhotoUsers = new ObservableCollection<PhotoUserDto>();
             LoadPhotoUsersCommand = new Command(async (myPhotos) => await ExecuteLoadPhotoUsersCommand(true));
             PhotoUserTapped = new Command<PhotoUserDto>(OnTappedPhotoUser);
             ShowOtherPhotosCommand = new Command(async (myPhotos) => await ExecuteLoadPhotoUsersCommand(false));
             ShowMyPhotosCommand = new Command(async (myPhotos) => await ExecuteLoadPhotoUsersCommand(true));
         }
+        #endregion
 
-
-
+        #region Methods
         private async Task ExecuteLoadPhotoUsersCommand(bool myPhotos)
         {
             IsBusy = true;
@@ -83,64 +98,10 @@ namespace XFProject.ViewModels
             }
         }
 
-        async Task ExecuteLoadItemsCommand()
-        {
-            IsBusy = true;
-
-            try
-            {
-                Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
-                foreach (var item in items)
-                {
-                    Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
 
         public void OnAppearing()
         {
             IsBusy = true;
-            SelectedItem = null;
-        }
-
-        public Item SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                SetProperty(ref _selectedItem, value);
-                OnItemSelected(value);
-            }
-        }
-
-        public ObservableCollection<PhotoUserDto> PhotoUsers
-        {
-            get => photoUsers;
-            set
-            {
-                photoUsers = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public PhotoUserDto PhotoUser
-        {
-            get => photoUser;
-
-            set
-            {
-                photoUser = value;
-                //OnItemSelected(value);
-            }
         }
 
         private async void OnTappedPhotoUser(PhotoUserDto obj)
@@ -156,14 +117,8 @@ namespace XFProject.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
+        #endregion
 
-        async void OnItemSelected(Item item)
-        {
-            if (item == null)
-                return;
 
-            // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
-        }
     }
 }

@@ -32,7 +32,6 @@
     <TabBar>
 
         <ShellContent Title="Fotos" Icon="icon_feed.png" Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
-        <ShellContent Title="Agregar Foto" Icon="icon_addphoto2.png" ContentTemplate="{DataTemplate local:NewItemPage}" />
         <ShellContent Title="Cambiar sesión" Icon="icon_changeuser.png"  ContentTemplate="{DataTemplate local:AboutPage}" />
     </TabBar>
 

@@ -11,6 +11,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using XFProject.Entities;
 using XFProject.Models;
+using XFProject.Views;
 
 namespace XFProject.ViewModels
 {
@@ -84,7 +85,7 @@ namespace XFProject.ViewModels
         private async void OnCancel()
         {
             // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync(nameof(Views.ItemsPage));
+            await Shell.Current.GoToAsync(nameof(ItemsPage));
         }
 
         private async void OnSave()
@@ -107,8 +108,6 @@ namespace XFProject.ViewModels
                     Title = "Foto agregada"
                 });
 
-                // This will pop the current page off the navigation stack
-                await Shell.Current.GoToAsync(nameof(Views.ItemsPage));
             }
             else
             {
@@ -121,7 +120,7 @@ namespace XFProject.ViewModels
             }
 
             // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync(nameof(Views.ItemsPage));
+            await Shell.Current.GoToAsync("..");
         }
 
         async void OnTakePhoto()

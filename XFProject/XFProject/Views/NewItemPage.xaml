@@ -6,7 +6,7 @@
              xmlns:viewmodels="clr-namespace:XFProject.ViewModels" xmlns:models="clr-namespace:XFProject.Models" 
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps" 
              x:DataType="viewmodels:NewItemViewModel">
-    <!--<ContentPage.Content>-->
+
     <ScrollView>
         <StackLayout Spacing="20" Padding="15">
             <StackLayout Style="{StaticResource ImageLabelStackLayout}">
@@ -26,26 +26,18 @@
 
                 <Entry Style="{StaticResource EntryStyle}" Text="{Binding Path=PhotoUserDto.PhotoDescription, Mode=TwoWay}"/>
             </StackLayout>
-            
-            <StackLayout>
-                <!--<Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
-                        <Label Text="MediaPicker Sample!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" />
-                    </Frame>
 
-                    <Button Text="Pick Image" Clicked="PickPhoto_Clicked" />
-                    <Button Text="Take Image" Clicked="TakePhoto_Clicked" />-->
-                <!--<Image x:Name="resultImage"  BindingContext="{Binding }"/>-->
+            <StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Image Source="icon_addphoto2.png" Style="{StaticResource imageStyle}"/>
                     <Label Text="Cargar foto" Style="{StaticResource NameLabel}"/>
                 </StackLayout>
                 <Button Text="Seleccionar foto" Command="{Binding PickPhotoCommand}"/>
                 <Button Text="Tomar foto" Command="{Binding TakePhotoCommand}"/>
-                <!--<Image Source="{Binding CamImage}"/>-->
                 <Image Source="{Binding PhotoPath}"/>
             </StackLayout>
 
-           
+
             <StackLayout Orientation="Vertical">
                 <StackLayout Orientation="Horizontal">
                     <Image Source="icon_location.png" Style="{StaticResource imageStyle}"/>
@@ -59,7 +51,7 @@
                     <Label Text="Longitud: "/>
                     <Label x:Name="lon" Text="{Binding Path=PhotoUserDto.Longitude, Mode=TwoWay}"/>
                 </StackLayout>
-                <Button Text="Mostrar Mapa" Clicked="MostrarMapa_Clicked"/>
+                <Button Text="Mostrar ubicación" Clicked="MostrarMapa_Clicked"/>
                 <Frame HeightRequest="300" WidthRequest="300" >
                     <maps:Map x:Name="map" MapType="Street"></maps:Map>
                 </Frame>
@@ -79,6 +71,6 @@
 
         </StackLayout>
     </ScrollView>
-    <!--</ContentPage.Content>-->
+
 
 </ContentPage>

@@ -26,21 +26,5 @@ namespace XFProject.Models
             Position = position;
         }
     }
-
-    //public class ExtendedBindableObject
-    //{
-    //    protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
-    //    {
-    //        if (EqualityComparer<T>.Default.Equals(storage, value))
-    //        {
-    //            return false;
-    //        }
-
-    //        storage = value;
-    //        OnPropertyChanged(propertyName);
-
-    //        return true;
-    //    }
-    //    Since the navigatio
-    //}
+   
 }
